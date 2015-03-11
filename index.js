@@ -91,8 +91,14 @@ module.exports = Harvest = function (opts) {
             }
 
             err = null;
-            if (res.statusCode > 399 || data instanceof Error || data === "Authentication failed for API request.") {
-                err = data;
+            if (res) {
+                if (res.statusCode > 399 || data instanceof Error || data === "Authentication failed for API request.") {
+                    err = data;
+                    data = {};
+                }
+            }
+            else {
+                err = 'Response from harvest was null';
                 data = {};
             }
 
